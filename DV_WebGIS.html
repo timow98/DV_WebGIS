@@ -157,7 +157,7 @@ for (var i = 0; i < adr.features.length ; i++){
   var seller = adr.features[i];
 
   // Füge Marker an Koordinate des jeweilgen Punktes ein (Koordinaten falschrum deshalb reverse)
-  L.marker(seller.geometry.coordinates.reverse()).addTo(WebGIS_test)
+  L.marker(seller.geometry.coordinates.reverse()).addTo(DV_WebGIS)
 
   // Erstellen Popup Fenster + Wahl der Daten die dargestellt werden 
   .bindPopup(`<h3> ${seller.properties.Betriebsna} </h3>
@@ -178,10 +178,10 @@ for (var i = 0; i < adr.features.length ; i++){
 }
 
   <!-- Layer control -->
-  L.control.groupedLayers(basemaps,overlays,options).addTo(WebGIS);
+  L.control.groupedLayers(basemaps,overlays,options).addTo(DV_WebGIS);
   
   <!-- Scale control -->
-  var scale = L.control.scale({maxWidth: 150, metric: true, imperial: true}).addTo(WebGIS);
+  var scale = L.control.scale({maxWidth: 150, metric: true, imperial: true}).addTo(DV_WebGIS);
  
 
 
