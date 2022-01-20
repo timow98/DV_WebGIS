@@ -65,6 +65,10 @@
    "Open Street Map INT": osmint_basemap
   };
 
+  <!-- Scale control -->
+  var scale = L.control.scale({maxWidth: 150, metric: true, imperial: true}).addTo(DV_WebGIS);
+  
+  
 
   for (var i = 0; i < Adr.features.length ; i++){
   // setze seller auf den aktuellen Verkäufer mit 'seller' kann man auf die jeweiligen features zugreifen
@@ -90,6 +94,7 @@
                                 </ul>`)
 .openPopup();}
 
+
   <!-- Overlay dictionary -->
   var overlays = {
   "Alle Direktvermarkter": overlay_adr,
@@ -108,14 +113,9 @@
 	  collapsed: true,
 	  position: "topleft"
 	};
-	  
 
   <!-- Layer control -->
   L.control.groupedLayers(basemaps,overlays,options).addTo(DV_WebGIS);
-  
-  <!-- Scale control -->
-  var scale = L.control.scale({maxWidth: 150, metric: true, imperial: true}).addTo(DV_WebGIS);
-
 
  </script>
  
