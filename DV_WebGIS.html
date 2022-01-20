@@ -18,9 +18,7 @@
  <script src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js"
    integrity="sha512-XQoYMqMTK8LvdxXYG3nZ448hOEQiglfqkJs1NOQV44cWnUrBc8PkAOcXy20w0vlaXaVUearIOBhiXZ5V3ynxwA=="
    crossorigin=""></script>
- <!-- Plugin  -->
- <script src="Plugins/leaflet.ajax.min.js"></script>
-  <!-- Plugins  -->
+ <!-- Plugins  -->
  <script src="Plugins/leaflet.groupedlayercontrol.min.js"></script>
  <script src="Plugins/leaflet.groupedlayercontrol.css"></script>
  <link rel="stylesheet" href="Plugins/leaflet.groupedlayercontrol.css" />
@@ -41,14 +39,13 @@
  <div id="mapid" style="width: 100%; height: 100%; padding: 0; margin: 0;"></div>
  
  <script>
-  
   <!-- Create Leaflet Map -->
-  var WebGIS  = L.map('mapid').setView([48.48026129426459, 8.998832702636719], 12);
+  var DV_WebGIS  = L.map('mapid').setView([48.48026129426459, 8.998832702636719], 12);
  
   <!-- Basemap 1 -->
   var osm_basemap = L.tileLayer('https://{s}.tile.openstreetmap.de/tiles/osmde/{z}/{x}/{y}.png', {
 	  attribution: '<a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>'
-  }).addTo(WebGIS);
+  }).addTo(DV_WebGIS);
  
   <!-- Basemap 2 -->
   var otm_basemap = L.tileLayer('https://{s}.tile.opentopomap.org/{z}/{x}/{y}.png', {
@@ -68,69 +65,30 @@
    "Open Street Map INT": osmint_basemap
   };
 
-  <!-- Marker -->
-  var newMarker = {
-  radius: 6,
-  fillColor: "#008080",
-  color: "#000",
-  weight: 1,
-  opacity: 1,
-  fillOpacity: 0.9
-  };
-  
-  <!-- Filterfunktionen
-  
-  function abHof(feature){
-  if (feature.properties.Verkauf=="ab Hof")return true
-  }
-  function Hofladen(feature){
-  if (feature.properties.Verkauf == "Hofladen") return true
-  }
-  function AutOSelbst(feature){
-  if (feature.properties.Verkauf == "Automat oder Selbstbedienung") return true
-  }
-  function abHaustüre(feature){
-  if (feature.properties.Verkauf == "ab Haustüre") return true
-  }
-  function Brennerei(feature){
-  if (feature.properties.Verkauf == "Brennerei") return true
-  }
 
-  <!-- Points -->
-  var Brennerei = L.geoJSON(Adr, {
-  filter: Brennerei,
-   pointToLayer: function (feature, latlng) {
-   return L.circleMarker(latlng, newMarker);
-   }}).addTo(WebGIS);
-  
-  var abHaustüre = L.geoJSON(Adr, {
-  filter: abHaustüre,
-   pointToLayer: function (feature, latlng) {
-   return L.circleMarker(latlng, newMarker);
-   }}).addTo(WebGIS);
-  
-  var AutOSelbst = L.geoJSON(Adr, {
-  filter: AutOSelbst,
-   pointToLayer: function (feature, latlng) {
-   return L.circleMarker(latlng, newMarker);
-   }}).addTo(WebGIS);
-  
-  var Hofladen = L.geoJSON(Adr, {
-  filter: Hofladen,
-   pointToLayer: function (feature, latlng) {
-   return L.circleMarker(latlng, newMarker);
-   }}).addTo(WebGIS);
-  
-  var abHof = L.geoJSON(Adr, {
-  filter: abHof,
-   pointToLayer: function (feature, latlng) {
-   return L.circleMarker(latlng, newMarker);
-   }}).addTo(WebGIS);
-   
-   var overlay_adr = new L.geoJSON(Adr, {
-   pointToLayer: function (feature, latlng) {
-   return L.circleMarker(latlng, newMarker);
-   }}).addTo(WebGIS);
+  for (var i = 0; i < Adr.features.length ; i++){
+  // setze seller auf den aktuellen Verkäufer mit 'seller' kann man auf die jeweiligen features zugreifen
+  var seller = Adr.features[i];
+	
+  // Füge Marker an Koordinate des jeweilgen Punktes ein (Koordinaten falschrum deshalb reverse)
+  var newMarker = L.marker(seller.geometry.coordinates.reverse()).addTo(DV_WebGIS)
+ 
+
+  // Erstellen Popup Fenster + Wahl der Daten die dargestellt werden 
+  .bindPopup(`<h3>${seller.properties.Betriebsna}</h3>
+              <p>Art von Verkauf: ${seller.properties.Verkauf} </p>
+              ${seller.properties.Wochenmark === null ? '' : '<p> Wochenmarkt: '+seller.properties.Wochenmark+'</p>'} 
+              <p>Produkte: ${seller.properties.Lebensmittelkategorien} </p>
+              ${seller.properties.Anbau === null ? '' : '<p> Anbau: '+seller.properties.Anbau+'</p>'}
+              <p>Öffnungszeiten: ${seller.properties.Öffnungsze} </p>
+              <p>Kontakt: <ul>  <li>${seller.properties.Vorname} ${seller.properties.Nachname}</li>
+                                <li>${seller.properties.KontaktStr}</li>
+                                <li>${seller.properties.KontaktPLZ} ${seller.properties.KontaktOrt} ${seller.properties.KontaktTei}</li>
+                                <li>${seller.properties.EMail}</li>
+                                <li>${seller.properties.Telefon}</li>
+                                ${seller.properties.Homepage === null ? '' : '<li><a href=https://'+seller.properties.Homepage+' target="_blank">'+seller.properties.Homepage+'</a></li></p>'} 
+                                </ul>`)
+.openPopup();}
 
   <!-- Overlay dictionary -->
   var overlays = {
@@ -143,46 +101,20 @@
   "Hofladen": Hofladen,  
    }};
 
-  var options = {
-      <!--exclusiveGroups: ["Besenwirtschaften", "Direktvermarkter"],
+  var options = 
+	{
+      <!--exclusiveGroups: ["Besenwirtschaften", "Direktvermarkter"]-->
       groupCheckboxes: true,
 	  collapsed: true,
 	  position: "topleft"
-	  };
-
-  // Schleife durch das Adressen Array 
-
-for (var i = 0; i < adr.features.length ; i++){
-  // setze seller auf den aktuellen Verkäufer mit 'seller' kann man auf die jeweiligen features zugreifen
-  var seller = adr.features[i];
-
-  // Füge Marker an Koordinate des jeweilgen Punktes ein (Koordinaten falschrum deshalb reverse)
-  L.marker(seller.geometry.coordinates.reverse()).addTo(DV_WebGIS)
-
-  // Erstellen Popup Fenster + Wahl der Daten die dargestellt werden 
-  .bindPopup(`<h3> ${seller.properties.Betriebsna} </h3>
-              <p>Art von Verkauf: ${seller.properties.Verkauf} </p>
-              ${seller.properties.Wochenmark === null ? '' : '<p> Wochenmarkt: '+seller.properties.Wochenmark+'</p>'} 
-              <p>Produkte: ${seller.properties.Lebensmittelkategorien} </p>
-              ${seller.properties.Anbau === null ? '' : '<p> Anbau: '+seller.properties.Anbau+'</p>'}
-              <p>Öffnungszeiten: ${seller.properties.Öffnungsze} </p>
-              <p>Kontakt: <ul>  <li>${seller.properties.Vorname} ${seller.properties.Nachname}</li>
-                                <li>${seller.properties.KontaktStr}</li>
-                                <li>${seller.properties.KontaktPLZ} ${seller.properties.KontaktOrt} ${seller.properties.KontaktTei}</li>
-                                <li>${seller.properties.EMail}</li>
-                                <li>${seller.properties.Telefon}</li>
-                                ${seller.properties.Homepage === null ? '' : '<li><a href=https://'+seller.properties.Homepage+' target="_blank">'+seller.properties.Homepage+'</a></li>'} 
-                                </ul>`)
-  .openPopup();
-
-}
+	};
+	  
 
   <!-- Layer control -->
   L.control.groupedLayers(basemaps,overlays,options).addTo(DV_WebGIS);
   
   <!-- Scale control -->
   var scale = L.control.scale({maxWidth: 150, metric: true, imperial: true}).addTo(DV_WebGIS);
- 
 
 
  </script>
