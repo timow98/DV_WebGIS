@@ -11,6 +11,7 @@
  <meta name="apple-mobile-web-app-capable" content="yes">
   <!-- set the title shown in the browser tab -->
  <title>WebGIS Direktvermarktung</title>
+ 
   <!-- Links to the leaflet CSS and JS -->
  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css"
    integrity="sha512-xodZBNTC5n17Xt2atTPuE1HxjVMSvLVW9ocqUKLsCC5CXdbqCmblAshOMAS6/keqq/sMZMZ19scR4PsZChSR7A=="
@@ -18,13 +19,15 @@
  <script src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js"
    integrity="sha512-XQoYMqMTK8LvdxXYG3nZ448hOEQiglfqkJs1NOQV44cWnUrBc8PkAOcXy20w0vlaXaVUearIOBhiXZ5V3ynxwA=="
    crossorigin=""></script>
+   
  <!-- Plugins  -->
- <script src="Plugins/leaflet.ajax.min.js"></script>
- <script src="Plugins/leaflet.groupedlayercontrol.min.js"></script>
+ <script src="Plugins/leaflet.groupedlayercontrol.js"></script>
  <script src="Plugins/leaflet.groupedlayercontrol.css"></script>
  <link rel="stylesheet" href="Plugins/leaflet.groupedlayercontrol.css" />
+ 
  <!-- Load adresses -->
  <script src="Adressen.js"></script>
+
  <!-- styles for elements html and body: fullscreen  -->
  <style>
   html, body {
@@ -37,8 +40,11 @@
 </head>
 <body>
 
+ 
+
  <!-- set the div element containing the map -->
  <div id="mapid" style="width: 100%; height: 100%; padding: 0; margin: 0;"></div>
+
  
  <script>
   // Create Leaflet Map
@@ -66,9 +72,68 @@
    "Open Topo Map": otm_basemap,
    "Open Street Map INT": osmint_basemap
   };
+  
+  // Filterfunktionen
+  
+  function F(feature){
+  if (verkauf=="ab Hof")return "ab Hof"
+  }
+  function Hofladen(feature){
+  if (feature.properties.Verkauf == "Hofladen") return true
+  }
+  function Selbstbedienung(feature){
+  if (feature.properties.Verkauf == "Selbstbedienung") return true
+  }
+  function abHaustüre(feature){
+  if (feature.properties.Verkauf == "ab Haustüre") return true
+  }
+  function Brennerei(feature){
+  if (feature.properties.Verkauf == "Brennerei") return true
+  }
+  function Automat(feature){
+  if (feature.properties.Verkauf == "Automat") return true
+  }
+// Points
+// var overlay = new L.geoJSON(Adr).addTo(DV_WebGIS)
+ 
+var Automat = L.geoJSON(Adr, {
+  filter: Automat}).addTo(DV_WebGIS);
+  
+  var Brennerei = L.geoJSON(Adr, {
+  filter: Brennerei}).addTo(DV_WebGIS);
+  
+  var abHaustüre = L.geoJSON(Adr, {
+  filter: abHaustüre}).addTo(DV_WebGIS);
+  
+  var Selbstbedienung = L.geoJSON(Adr, {
+  filter: Selbstbedienung}).addTo(DV_WebGIS);
+  
+  var Hofladen = L.geoJSON(Adr, {
+  filter: Hofladen}).addTo(DV_WebGIS);
+  
+  var abHof = L.geoJSON(Adr, {
+  filter: abHof}).addTo(DV_WebGIS);
 
-  // Scale control
+  var overlay_adr = new L.geoJSON(Adr).addTo(DV_WebGIS);
+
+  <!-- Overlay dictionary -->
+  var overlays = {
+  "Direktvermarkter":{
+	  "Direktvermarkter": overlay_adr
+  },
+  "<b><font size='3'>Verkaufsart</font></b> ":{
+  "ab Haustüre": abHaustüre,
+  "ab Hof": abHof,
+  "Automat": Automat,
+  "Selbstbedienung": Selbstbedienung,
+  "Brennerei": Brennerei,
+  "Hofladen": Hofladen,
+  "Direktvermarkter": overlay_adr
+   }};
+  
+// Scale control
   var scale = L.control.scale({maxWidth: 150, metric: true, imperial: true}).addTo(DV_WebGIS);
+
 
   for (var i = 0; i < Adr.features.length ; i++){
   
@@ -79,10 +144,11 @@
   
   // Füge Marker an Koordinate des jeweilgen Punktes ein (Koordinaten falschrum deshalb reverse)  
   var marker = L.marker(seller.geometry.coordinates.reverse()).addTo(DV_WebGIS)
+  // var marker = L.marker(seller).addTo(DV_WebGIS)
 
   // Erstellen Popup Fenster + Wahl der Daten die dargestellt werden 
-  .bindPopup(`<h3>${seller.properties.Betriebsna}</h3>
-              <p>Art von Verkauf: ${seller.properties.Verkauf} </p>
+.bindPopup(`<h3>${seller.properties.Betriebsna}</h3>
+              <p>Art von Verkauf: ${verkauf} </p>
               ${seller.properties.Wochenmark === null ? '' : '<p> Wochenmarkt: '+seller.properties.Wochenmark+'</p>'} 
               <p>Produkte: ${seller.properties.Lebensmittelkategorien} </p>
               ${seller.properties.Anbau === null ? '' : '<p> Anbau: '+seller.properties.Anbau+'</p>'}
@@ -97,25 +163,18 @@
 .openPopup();
 }
 
-var overlay = new L.geoJSON(Adr).addTo(DV_WebGIS);
-
- // Overlay dictionary
-var overlays = {
-  	"Direktvermarkter": overlay
-  };
-
 var options = 
 	{
-      // exclusiveGroups: ["Besenwirtschaften", "Direktvermarkter"]
+      exclusiveGroups: ["Direktvermarkter"],
       groupCheckboxes: true,
 	  collapsed: false,
 	  position: "topleft"
 	};
 
- var legend = L.control.layers(basemaps,overlays,{collapsed: false}).addTo(DV_WebGIS);
-
 // Layer control
-// L.control.groupedLayers(basemaps,overlays,options).addTo(DV_WebGIS);
+//var legend = L.control.layers(basemaps,overlays,{collapsed: false}).addTo(DV_WebGIS);
+L.control.groupedLayers(basemaps,overlays, options).addTo(DV_WebGIS);
+
 
 </script>
 </body>
