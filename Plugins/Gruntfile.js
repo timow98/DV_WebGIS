@@ -1,8 +1,5 @@
 /* eslint object-curly-newline: [2, "always"] */
 
-"dependencies": {
-  "grunt": ">=1.3.0"
-}
 module.exports = function (grunt) {
   var banner = '/*! Version: <%= pkg.version %>\nDate: <%= grunt.template.today("yyyy-mm-dd") %> */\n';
 
