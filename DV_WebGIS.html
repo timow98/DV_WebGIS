@@ -35,6 +35,21 @@
 	 padding: 0;
 	 margin: 0;
   }
+	 
+//Hier wird die Tabelle bearbeitet 
+table {
+  border-collapse: collapse;
+  width: 100%;
+}
+
+th, td {
+  text-align: left;
+  padding: 6px;
+  vertical-align:top;
+}
+
+tr:nth-child(even) {background-color: white;}
+
  </style>	
 </head>
 <body>
@@ -82,19 +97,22 @@
   
   // Add popup function
   function popUpFunction(feature, layer) {
-  var popupContent = `<h3>${feature.properties.Betriebsna}</h3>
-              <p>Art von Verkauf: ${feature.properties.Verkauf} </p>
-              ${feature.properties.Wochenmark === null ? '' : '<p> Wochenmarkt: '+feature.properties.Wochenmark+'</p>'} 
-              <p>Produkte: ${feature.properties.Lebensmitt} </p>
-              ${feature.properties.Anbau === null ? '' : '<p> Anbau: '+feature.properties.Anbau+'</p>'}
-              <p>Öffnungszeiten: ${feature.properties.Öffnungsz} </p>
-              <p>Kontakt: <ul>  <li>${feature.properties.Vorname} ${feature.properties.Nachname}</li>
-                                <li>${feature.properties.KontaktStr}</li>
-                                <li>${feature.properties.KontaktPLZ} ${feature.properties.KontaktOrt} ${feature.properties.KontaktTei}</li>
-                                <li>${feature.properties.EMail}</li>
-                                <li>${feature.properties.Telefon}</li>
-                                ${feature.properties.Homepage === null ? '' : '<li><a href=https://'+feature.properties.Homepage+' target="_blank">'+feature.properties.Homepage+'</a></li></p>'} 
-                                </ul>`;
+  var popupContent = 
+              `<h3>${feature.properties.Betriebsna}</h3>
+             
+              <table>
+              <p><tr><td>Verkaufsart:</td> <td>${feature.properties.Verkauf} </td> </p>
+              ${feature.properties.Wochenmark === null ? '' : '<p><tr><td> Wochenmarkt:</td> <td>'+feature.properties.Wochenmark+'</p>'}</td> 
+              <p><tr><td>Produkte:</td> <td>${feature.properties.Lebensmitt} </td></p>
+              <tr>${feature.properties.Anbau === null ? '' : '<p><td> Anbau:</td>  <td>'+feature.properties.Anbau+'</td></p>'}
+              ${feature.properties.Öffnungsz === null ? '' : '<p><tr><td>Öffnungszeiten:</td> <td>'+feature.properties.Öffnungsz+'</p>'}</td>
+              <p><tr><td>Kontakt:</td> <ul>  <td>${feature.properties.Vorname} ${feature.properties.Nachname}<br>
+                                ${feature.properties.KontaktStr}<br>
+                                ${feature.properties.KontaktPLZ} ${feature.properties.KontaktOrt} ${feature.properties.KontaktTei}<br>
+                                ${feature.properties.EMail} <br>
+                                ${feature.properties.Telefon}<br>
+                                ${feature.properties.Homepage === null ? '' : '<a href=https://'+feature.properties.Homepage+' target="_blank">'+feature.properties.Homepage+'</a></td></p>'} 
+                                </ul></tr>`;
    layer.bindPopup(popupContent);
   }
   
@@ -171,7 +189,7 @@
 
   var overlay_adr = new L.geoJSON(Adr, {
    onEachFeature: popUpFunction,
-   });
+   }).addTo(DV_WebGIS);
    
   var Sonstige = L.geoJSON(Adr, {
   filter: Rest,
