@@ -60,7 +60,7 @@ tr:nth-child(even) {background-color: white;}
  <script>
   
   // Create Leaflet Map
-  var DV_WebGIS  = L.map('mapid').setView([48.48026129426459, 8.998832702636719], 11);
+  var DV_WebGIS  = L.map('mapid').setView([48.49300000000000, 8.998832702636719], 11);
  
   // Basemap 1
   var osm_basemap = L.tileLayer('https://{s}.tile.openstreetmap.de/tiles/osmde/{z}/{x}/{y}.png', {
@@ -201,7 +201,7 @@ tr:nth-child(even) {background-color: white;}
 
   // Overlay dictionary
   var overlays = {
-  "<b><font size='3' style='color:rgb(50,80,200);'>Verkaufsart</font></b> ":{
+  "<b><font size='3' style='color:rgb(50,80,200);'>  Verkaufsart</font></b> ":{
   "Alle Direktvermarkter": overlay_adr,
   "Automat/Selbstbed.": AutOSelbst,
   "ab Haustüre": abHaustüre,
@@ -218,8 +218,8 @@ tr:nth-child(even) {background-color: white;}
       groupCheckboxes: false,
 	  groupsCollapsable: true,
 	  collapsed: false,
-	  groupsExpandedClass: "leaflet-control-layers-group-collapse-default", 
-	  groupsCollapsedClass: "leaflet-control-layers-group-expand-default",
+	  groupsExpandedClass: "chevron bottom", 
+	  groupsCollapsedClass: "chevron right",
 	  position: "topleft"
 	  };
 	  
