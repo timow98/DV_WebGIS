@@ -60,7 +60,7 @@ tr:nth-child(even) {background-color: white;}
  <script>
   
   // Create Leaflet Map
-  var DV_WebGIS  = L.map('mapid').setView([48.48026129426459, 8.998832702636719], 12);
+  var DV_WebGIS  = L.map('mapid').setView([48.48026129426459, 8.998832702636719], 11);
  
   // Basemap 1
   var osm_basemap = L.tileLayer('https://{s}.tile.openstreetmap.de/tiles/osmde/{z}/{x}/{y}.png', {
@@ -141,7 +141,6 @@ tr:nth-child(even) {background-color: white;}
   }
   function Rest (feature){
 	  //hier sind alle anderen Kategorien drin, für die es keinen extra Filter gibt.
-	  if (feature.properties.Verkauf.includes("Brennerei"))return true
 	  if (feature.properties.Verkauf.includes("Postversand"))return true
 	  if (feature.properties.Verkauf.includes("Onlineshop"))return true
 	  if (feature.properties.Verkauf.includes("Verkaufsstand"))return true
@@ -202,7 +201,7 @@ tr:nth-child(even) {background-color: white;}
 
   // Overlay dictionary
   var overlays = {
-  "<b><font size='3'>Verkaufsart</font></b> ":{
+  "<b><font size='3' style='color:rgb(50,80,200);'>Verkaufsart</font></b> ":{
   "Alle Direktvermarkter": overlay_adr,
   "Automat/Selbstbed.": AutOSelbst,
   "ab Haustüre": abHaustüre,
@@ -215,9 +214,12 @@ tr:nth-child(even) {background-color: white;}
    }};
 
   var options = {
-      <!--exclusiveGroups: ["Besenwirtschaften", "Direktvermarkter"],
+      //exclusiveGroups: ["Besenwirtschaften", "Direktvermarkter"],
       groupCheckboxes: false,
-	  collapsed: true,
+	  groupsCollapsable: true,
+	  collapsed: false,
+	  groupsExpandedClass: "leaflet-control-layers-group-collapse-default", 
+	  groupsCollapsedClass: "leaflet-control-layers-group-expand-default",
 	  position: "topleft"
 	  };
 	  
