@@ -1,6 +1,6 @@
 {
   "name": "leaflet-groupedlayercontrol",
-  "version": "0.6.1",
+  "version": "0.6.0",
   "description": "A Leaflet layer control with support for grouping overlays together",
   "main": "dist/leaflet.groupedlayercontrol.min.js",
   "directories": {
@@ -30,7 +30,7 @@
   "homepage": "https://github.com/ismyrnow/leaflet-groupedlayercontrol",
   "devDependencies": {
     "eslint": "^3.1.1",
-    "grunt": ">=1.3.0",
+    "grunt": "^0.4.5",
     "grunt-contrib-cssmin": "^0.12.2",
     "grunt-contrib-uglify": "^0.8.0",
     "load-grunt-tasks": "^3.1.0"
