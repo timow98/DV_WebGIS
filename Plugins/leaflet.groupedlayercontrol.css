@@ -12,3 +12,29 @@
   overflow-y: scroll;
   padding-right: 10px;
 }
+
+.leaflet-control-layers-group.group-collapsable.collapsed .leaflet-control-layers-group-collapse,
+.leaflet-control-layers-group.group-collapsable:not(.collapsed) .leaflet-control-layers-group-expand,
+.leaflet-control-layers-group.group-collapsable.collapsed label:not(.leaflet-control-layers-group-label){
+  display: none;
+}
+
+.leaflet-control-layers-group-expand-default:before{
+  content: "+"; 
+  font-size: 20px;
+  font-weight: bold;
+  width: 15px; 
+  color: rgb(50,80,200);
+  display: inline-block; 
+  text-align: center;
+}
+    
+.leaflet-control-layers-group-collapse-default:before{
+  content: "-"; 
+  font-size: 20px;
+  font-weight: bold;
+  width: 15px; 
+  color: rgb(50,80,200);
+  display: inline-block; 
+  text-align: center;
+}
