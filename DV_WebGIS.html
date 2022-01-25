@@ -188,12 +188,12 @@ tr:nth-child(even) {background-color: white;}
 
   var overlay_adr = new L.geoJSON(Adr, {
    onEachFeature: popUpFunction,
-   });
+   }).addTo(DV_WebGIS);
    
   var Sonstige = L.geoJSON(Adr, {
   filter: Rest,
   onEachFeature: popUpFunction,
-   }).addTo(DV_WebGIS); 
+   }); 
    
 
   // Overlay dictionary
