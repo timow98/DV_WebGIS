@@ -72,17 +72,10 @@ tr:nth-child(even) {background-color: white;}
   attribution: '<a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>, <a href="http://viewfinderpanoramas.org">SRTM</a> | Map style: &copy; <a href="https://opentopomap.org">OpenTopoMap</a> (<a href="https://creativecommons.org/licenses/by-sa/3.0/">CC-BY-SA</a>)'
   });
  
-  // Basemap 3
-  var osmint_basemap = L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-  maxZoom: 19,
-  attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
-  });
- 
   // Basemap dictionary
   var basemaps = {
    "Open Street Map DE": osm_basemap,
-   "Open Topo Map": otm_basemap,
-   "Open Street Map INT": osmint_basemap
+   "Open Topo Map": otm_basemap
   };
 
   // Marker
@@ -117,7 +110,7 @@ tr:nth-child(even) {background-color: white;}
   }
   
   
-  // Filterfunktionen
+  // Filterfunktionen Verkaufsart
   function abHof(feature){
   if (feature.properties.Verkauf.includes("ab Hof")) return true
   }
@@ -149,8 +142,101 @@ tr:nth-child(even) {background-color: white;}
 	  if (feature.properties.Verkauf.includes("Erdbeerfeld"))return true
 	  if (feature.properties.Verkauf.includes("Fachgeschäft"))return true
   } 
+  
+  // Filterfunktionen Produkte
+  
+  function Obst(feature){
+  if (feature.properties.Lebensmitt.includes("Obst")) return true
+  }
+  function Gemüse(feature){
+  if (feature.properties.Lebensmitt.includes("Gemüse")) return true
+  }
+  function Linsen(feature){
+  if (feature.properties.Lebensmitt.includes("Linsen")) return true
+  }
+  function Kartoffeln(feature){
+  if (feature.properties.Lebensmitt.includes("Kartoffeln")) return true
+  }
+  function Eier(feature){
+  if (feature.properties.Lebensmitt.includes("Eier")) return true
+  }
+  function Milch(feature){
+  if (feature.properties.Lebensmitt.includes("Milch")) return true
+  }
+  function Honig(feature){
+  if (feature.properties.Lebensmitt.includes("Honig")) return true
+  }
+  function Marmelade(feature){
+  if (feature.properties.Lebensmitt.includes("Marmelade")) return true
+  }
+  function Öl(feature){
+  if (feature.properties.Lebensmitt.includes("Öl")) return true
+  }
+  function Brot(feature){
+  if (feature.properties.Lebensmitt.includes("Brot")) return true
+  }
+  function Nudeln(feature){
+  if (feature.properties.Lebensmitt.includes("Nudeln")) return true
+  }
+  function Mehl(feature){
+  if (feature.properties.Lebensmitt.includes("Mehl")) return true
+  }
+  function Schwein(feature){
+  if (feature.properties.Lebensmitt.includes("Schwein")) return true
+  }
+  function Geflügel(feature){
+  if (feature.properties.Lebensmitt.includes("Geflügel")) return true
+  }
+  function Rind(feature){
+  if (feature.properties.Lebensmitt.includes("Rind")) return true
+  }
+  function Lamm(feature){
+  if (feature.properties.Lebensmitt.includes("Lamm")) return true
+  }
+  function Wild(feature){
+  if (feature.properties.Lebensmitt.includes("Wild")) return true
+  }
+  function Forelle(feature){
+  if (feature.properties.Lebensmitt.includes("Forelle")) return true
+  }
+  function Saft(feature){
+  if (feature.properties.Lebensmitt.includes("Saft")) return true
+  }
+  function Most(feature){
+  if (feature.properties.Lebensmitt.includes("Most")) return true
+  }
+  function Wein(feature){
+  if (feature.properties.Lebensmitt.includes("Wein")) return true
+  }
+  function Secco(feature){
+  if (feature.properties.Lebensmitt.includes("Secco")) return true
+  }
+  function BräLi(feature){
+  if (feature.properties.Lebensmitt.includes("Brände/Liköre")) return true
+  }
+  function Whisky(feature){
+  if (feature.properties.Lebensmitt.includes("Whisky")) return true
+  }
+  function Met(feature){
+  if (feature.properties.Lebensmitt.includes("Met")) return true
+  }
+  function Blumen(feature){
+  if (feature.properties.Lebensmitt.includes("Blumen")) return true
+  }
+  function Kräuter(feature){
+  if (feature.properties.Lebensmitt.includes("Kräuter")) return true
+  }
+  function Setzlinge(feature){
+  if (feature.properties.Lebensmitt.includes("Setzlinge")) return true
+  }
+  function Nüsse(feature){
+  if (feature.properties.Lebensmitt.includes("Nüsse")) return true
+  }
+  function Wurst(feature){
+  if (feature.properties.Lebensmitt.includes("Wurst")) return true
+  }
  
-  // Points
+  // Points Verkaufsart
   var AutOSelbst = L.geoJSON(Adr, {
   filter: AutOSelbst,
   onEachFeature: popUpFunction
@@ -195,13 +281,164 @@ tr:nth-child(even) {background-color: white;}
   onEachFeature: popUpFunction,
    }); 
    
+  // Points Produkte
+    var Obst = L.geoJSON(Adr, {
+  filter: Obst,
+  onEachFeature: popUpFunction,
+   });
+   
+  var Gemüse = L.geoJSON(Adr, {
+  filter: Gemüse,
+  onEachFeature: popUpFunction,
+   });
+   
+  var Linsen = L.geoJSON(Adr, {
+  filter: Linsen,
+  onEachFeature: popUpFunction,
+   });
+  
+  var Kartoffeln = L.geoJSON(Adr, {
+  filter: Kartoffeln,
+  onEachFeature: popUpFunction,
+  });
+  
+  var Eier = L.geoJSON(Adr, {
+  filter: Eier,
+  onEachFeature: popUpFunction,
+   });
+  
+  var Milch = L.geoJSON(Adr, {
+  filter: Milch,
+  onEachFeature: popUpFunction,
+   });
+  
+  var Honig = L.geoJSON(Adr, {
+  filter: Honig,
+  onEachFeature: popUpFunction,
+   });
+
+  var Marmelade = L.geoJSON(Adr, {
+  filter: Marmelade,
+  onEachFeature: popUpFunction,
+   });
+
+  var Öl = L.geoJSON(Adr, {
+  filter: Öl,
+  onEachFeature: popUpFunction,
+   });
+
+  var Brot = L.geoJSON(Adr, {
+  filter: Brot,
+  onEachFeature: popUpFunction,
+   });
+
+  var Nudeln = L.geoJSON(Adr, {
+  filter: Nudeln,
+  onEachFeature: popUpFunction,
+   });
+
+  var Mehl = L.geoJSON(Adr, {
+  filter: Mehl,
+  onEachFeature: popUpFunction,
+   });
+
+  var Schwein = L.geoJSON(Adr, {
+  filter: Schwein,
+  onEachFeature: popUpFunction,
+   });
+
+  var Geflügel = L.geoJSON(Adr, {
+  filter: Geflügel,
+  onEachFeature: popUpFunction,
+   });
+
+  var Rind = L.geoJSON(Adr, {
+  filter: Rind,
+  onEachFeature: popUpFunction,
+   });
+
+  var Lamm = L.geoJSON(Adr, {
+  filter: Lamm,
+  onEachFeature: popUpFunction,
+   });
+
+  var Wild = L.geoJSON(Adr, {
+  filter: Wild,
+  onEachFeature: popUpFunction,
+   });
+
+  var Forelle = L.geoJSON(Adr, {
+  filter: Forelle,
+  onEachFeature: popUpFunction,
+   });
+
+  var Saft = L.geoJSON(Adr, {
+  filter: Saft,
+  onEachFeature: popUpFunction,
+   });
+
+  var Most = L.geoJSON(Adr, {
+  filter: Most,
+  onEachFeature: popUpFunction,
+   });
+
+  var Wein = L.geoJSON(Adr, {
+  filter: Wein,
+  onEachFeature: popUpFunction,
+   });
+
+  var Secco = L.geoJSON(Adr, {
+  filter: Secco,
+  onEachFeature: popUpFunction,
+   });
+
+  var BräLi = L.geoJSON(Adr, {
+  filter: BräLi,
+  onEachFeature: popUpFunction,
+   });
+
+  var Whisky = L.geoJSON(Adr, {
+  filter: Whisky,
+  onEachFeature: popUpFunction,
+   });
+
+  var Met = L.geoJSON(Adr, {
+  filter: Met,
+  onEachFeature: popUpFunction,
+   });
+
+   var Blumen = L.geoJSON(Adr, {
+  filter: Blumen,
+  onEachFeature: popUpFunction,
+   });
+
+   var Kräuter = L.geoJSON(Adr, {
+  filter: Kräuter,
+  onEachFeature: popUpFunction,
+   });
+
+   var Setzlinge = L.geoJSON(Adr, {
+  filter: Setzlinge,
+  onEachFeature: popUpFunction,
+   });
+
+   var Nüsse = L.geoJSON(Adr, {
+  filter: Nüsse,
+  onEachFeature: popUpFunction,
+   });
+
+   var Wurst = L.geoJSON(Adr, {
+  filter: Wurst,
+  onEachFeature: popUpFunction,
+   })
+   
   // Landkreis Polyline
   var polyline = new L.geoJSON(Lines, {color: 'grey'}).addTo(DV_WebGIS);
    
 
   // Overlay dictionary
   var overlays = {
-  "<b><font size='3' style='color:rgb(50,80,200);'>  Verkaufsart</font></b> ":{
+  "<b><font size='2' style='color:rgb(50,80,200);'>  Verkaufsart</font></b> ":{
   "Alle Direktvermarkter": overlay_adr,
   "Automat/Selbstbed.": AutOSelbst,
   "ab Haustüre": abHaustüre,
@@ -211,7 +448,39 @@ tr:nth-child(even) {background-color: white;}
   "Hofladen": Hofladen,
   "Lieferservice": Liefer,
   "Sonstige": Sonstige
-   }};
+   },
+  "<b><font size='2' style='color:rgb(50,80,200);'>  Produkte</font></b> ":{
+  "Obst": Obst, 
+  "Gemüse": Gemüse,
+  "Linsen": Linsen,
+  "Kartoffeln": Kartoffeln, 
+  "Eier": Eier,
+  "Milch": Milch, 
+  "Honig": Honig,
+  "Marmelade": Marmelade,
+  "Öl": Öl,
+  "Brot": Brot,
+  "Nudeln": Nudeln,
+  "Mehl": Mehl,
+  "Schwein": Schwein,
+  "Geflügel": Geflügel,
+  "Rind": Rind, 
+  "Lamm": Lamm, 
+  "Wild": Wild,
+  "Forelle": Forelle,
+  "Saft": Saft,
+  "Most": Most,
+  "Wein": Wein,
+  "Secco": Secco,
+  "Brände/Liköre": BräLi,
+  "Whisky": Whisky,
+  "Met": Met,
+  "Blumen": Blumen,
+  "Kräuter": Kräuter,
+  "Setzlinge": Setzlinge,
+  "Nüsse": Nüsse,
+  "Wurst": Wurst
+  }};
 
   var options = {
       //exclusiveGroups: ["Besenwirtschaften", "Direktvermarkter"],
