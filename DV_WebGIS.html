@@ -26,6 +26,7 @@
 
  <!-- Load adresses -->
  <script src="Adressen.js"></script>
+ <script src="Lk_Tü.js"></script>
  <!-- styles for elements html and body: fullscreen  -->
  <style>
   html, body {
@@ -177,6 +178,9 @@
   onEachFeature: popUpFunction,
    }); 
    
+  // Landkreis Polyline
+  var polyline = new L.geoJSON(Lines, {color: 'grey'}).addTo(DV_WebGIS);
+   
 
   // Overlay dictionary
   var overlays = {
@@ -195,7 +199,7 @@
   var options = {
       <!--exclusiveGroups: ["Besenwirtschaften", "Direktvermarkter"],
       groupCheckboxes: false,
-	  collapsed: false,
+	  collapsed: true,
 	  position: "topleft"
 	  };
 	  
