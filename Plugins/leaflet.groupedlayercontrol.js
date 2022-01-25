@@ -11,8 +11,8 @@ L.Control.GroupedLayers = L.Control.extend({
     exclusiveGroups: [],
     groupCheckboxes: false,
     groupsCollapsable: false,
-	groupsExpandedClass: "chevron left",
-    groupsCollapsedClass: "leaflet-control-layers-group-expand-default",
+	groupsExpandedClass: "chevron bottom",
+    groupsCollapsedClass: "chevron right",
   },
 
   initialize: function (baseLayers, groupedOverlays, options) {
