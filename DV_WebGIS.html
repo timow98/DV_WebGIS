@@ -44,11 +44,17 @@ table {
 
 th, td {
   text-align: left;
-  padding: 6px;
+  padding: 4px;
+  height: fit-content;
   vertical-align:top;
 }
 
 tr:nth-child(even) {background-color: white;}
+
+.leaflet-control-layers-expanded{
+  max-height: 500px;
+  overflow-y: scroll;
+}
 
  </style>	
 </head>
@@ -91,21 +97,23 @@ tr:nth-child(even) {background-color: white;}
   // Add popup function
   function popUpFunction(feature, layer) {
   var popupContent = 
-              `<h3>${feature.properties.Betriebsna}</h3>
+              `${feature.properties.logo === null ? '' : '<img src="/images/logos/'+feature.properties.logo+'" alt="Firmenlogo">'}
+              <h3>${feature.properties.Betriebsna}</h3>
              
               <table>
-              <p><tr><td>Verkaufsart:</td> <td>${feature.properties.Verkauf} </td> </p>
-              ${feature.properties.Wochenmark === null ? '' : '<p><tr><td> Wochenmarkt:</td> <td>'+feature.properties.Wochenmark+'</p>'}</td> 
-              <p><tr><td>Produkte:</td> <td>${feature.properties.Lebensmitt} </td></p>
-              <tr>${feature.properties.Anbau === null ? '' : '<p><td> Anbau:</td>  <td>'+feature.properties.Anbau+'</td></p>'}
-              ${feature.properties.Öffnungsz === null ? '' : '<p><tr><td>Öffnungszeiten:</td> <td>'+feature.properties.Öffnungsz+'</p>'}</td>
-              <p><tr><td>Kontakt:</td> <ul>  <td>${feature.properties.Vorname} ${feature.properties.Nachname}<br>
-                                ${feature.properties.KontaktStr}<br>
-                                ${feature.properties.KontaktPLZ} ${feature.properties.KontaktOrt} ${feature.properties.KontaktTei}<br>
-                                ${feature.properties.EMail} <br>
-                                ${feature.properties.Telefon}<br>
-                                ${feature.properties.Homepage === null ? '' : '<a href=https://'+feature.properties.Homepage+' target="_blank">'+feature.properties.Homepage+'</a></td></p>'} 
-                                </ul></tr>`;
+                <tr><td>Verkaufsart:</td> <td>${feature.properties.Verkauf} </td></tr>
+                ${feature.properties.Wochenmark === null ? '' : '<tr><td> Wochenmarkt:</td> <td>'+feature.properties.Wochenmark+'</td></tr>'} 
+                <tr><td>Produkte:</td> <td>${feature.properties.Lebensmitt} </td></tr>
+                <tr>${feature.properties.Anbau === null ? '' : '<td> Anbau:</td>  <td>'+feature.properties.Anbau+'</td></tr>'}
+                ${feature.properties.Öffnungsz === null ? '' : '<tr><td>Öffnungszeiten:</td> <td>'+feature.properties.Öffnungsz+'</td></tr>'}
+                <tr><td>Kontakt:</td><td>${feature.properties.Vorname} ${feature.properties.Nachname}<br>
+                                  ${feature.properties.KontaktStr}<br>
+                                  ${feature.properties.KontaktPLZ} ${feature.properties.KontaktOrt} ${feature.properties.KontaktTei === null ? '' : feature.properties.KontaktTei}<br>
+                                  ${feature.properties.EMail === null ? '' : feature.properties.EMail} <br>
+                                  ${feature.properties.Telefon === null ? '' : feature.properties.Telefon}<br>
+                                  ${feature.properties.Homepage === null ? '' : '<a href=https://'+feature.properties.Homepage+' target="_blank">'+feature.properties.Homepage+'</a></td></p>'} 
+                                  </tr>
+              </table>`;
    layer.bindPopup(popupContent);
   }
   
