@@ -9,9 +9,11 @@
  <meta name="viewport" content="initial-scale=1,user-scalable=no,maximum-scale=1,width=device-width">
  <meta name="mobile-web-app-capable" content="yes">
  <meta name="apple-mobile-web-app-capable" content="yes">
-  <!-- set the title shown in the browser tab -->
- <title>WebGIS Direktvermarktung</title>
-  <!-- Links to the leaflet CSS and JS -->
+ 
+ <!-- set the title shown in the browser tab -->
+	<title>WebGIS Direktvermarktung</title>
+	
+ <!-- Links to the leaflet CSS and JS -->
  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css"
    integrity="sha512-xodZBNTC5n17Xt2atTPuE1HxjVMSvLVW9ocqUKLsCC5CXdbqCmblAshOMAS6/keqq/sMZMZ19scR4PsZChSR7A=="
    crossorigin=""/>
@@ -19,14 +21,19 @@
    integrity="sha512-XQoYMqMTK8LvdxXYG3nZ448hOEQiglfqkJs1NOQV44cWnUrBc8PkAOcXy20w0vlaXaVUearIOBhiXZ5V3ynxwA=="
    crossorigin=""></script>
    
- <!-- Plugins  -->
- <script src="Plugins/leaflet.groupedlayercontrol.js"></script>
- <script src="Plugins/leaflet.groupedlayercontrol.css"></script>
- <link rel="stylesheet" href="Plugins/leaflet.groupedlayercontrol.css" />
-
+ <!-- Grouped Layers  -->
+	<script src="Plugins/leaflet.groupedlayercontrol.js"></script>
+	<script src="Plugins/leaflet.groupedlayercontrol.css"></script>
+	<link rel="stylesheet" href="Plugins/leaflet.groupedlayercontrol.css" />
+ 
+ <!-- Geolocation -->
+	<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/leaflet.locatecontrol/dist/L.Control.Locate.min.css" />
+	<script src="https://cdn.jsdelivr.net/npm/leaflet.locatecontrol/dist/L.Control.Locate.min.js" charset="utf-8"></script>
+ 
  <!-- Load adresses -->
- <script src="Adressen.js"></script>
- <script src="Lk_Tü.js"></script>
+	<script src="Adressen.js"></script>
+	<script src="Lk_Tü.js"></script>
+ 
  <!-- styles for elements html and body: fullscreen  -->
  <style>
   html, body {
@@ -67,6 +74,7 @@ tr:nth-child(even) {background-color: white;}
   
   // Create Leaflet Map
   var DV_WebGIS  = L.map('mapid').setView([48.49300000000000, 8.998832702636719], 11);
+  DV_WebGIS.attributionControl.addAttribution('Marie-Louise Dress, Lisa Holderied, Ben Schneider, Timo Walcher | Daten: Landratsamt Tübingen');
  
   // Basemap 1
   var osm_basemap = L.tileLayer('https://{s}.tile.openstreetmap.de/tiles/osmde/{z}/{x}/{y}.png', {
@@ -82,16 +90,6 @@ tr:nth-child(even) {background-color: white;}
   var basemaps = {
    "Open Street Map DE": osm_basemap,
    "Open Topo Map": otm_basemap
-  };
-
-  // Marker
-  var newMarker = {
-  radius: 6,
-  fillColor: "#008080",
-  color: "#000",
-  weight: 1,
-  opacity: 1,
-  fillOpacity: 0.9
   };
   
   // Add popup function
@@ -499,10 +497,22 @@ tr:nth-child(even) {background-color: white;}
 	  groupsCollapsedClass: "chevron right",
 	  position: "topleft"
 	  };
+	
+  var locateOptions = {
+	  enableHighAccuracy: true,
+	  position: "topright",
+	  initialZoomLevel: false,
+	  setView: false,
+	  strings: {
+		title: "Standort"}
+	};
 	  
   // Layer control
   L.control.groupedLayers(basemaps,overlays,options).addTo(DV_WebGIS);
   
+  // Location Control
+  L.control.locate(locateOptions).addTo(DV_WebGIS);
+
   // Scale control
   var scale = L.control.scale({maxWidth: 150, metric: true, imperial: true}).addTo(DV_WebGIS);
  
