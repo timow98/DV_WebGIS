@@ -72,9 +72,11 @@ tr:nth-child(even) {background-color: white;}
  
  <script>
   
-  // Create Leaflet Map
+  // Leaflet Map erstellen + attributions (Impressum)
   var DV_WebGIS  = L.map('mapid').setView([48.49300000000000, 8.998832702636719], 11);
-  DV_WebGIS.attributionControl.addAttribution('Marie-Louise Dress, Lisa Holderied, Ben Schneider, Timo Walcher | Daten: Landratsamt Tübingen');
+  DV_WebGIS.attributionControl.addAttribution('GEO-51 Integratives Projekt | '+
+  '<a href="https://uni-tuebingen.de/fakultaeten/mathematisch-naturwissenschaftliche-fakultaet/fachbereiche/geowissenschaften/arbeitsgruppen/geographie/forschungsbereich/geoinformatik-gis/arbeitsgruppe/aktuelles/">Geographisches Institut Tübingen</a>'+ 
+  '| Marie-Louise Dress, Lisa Holderied, Ben Schneider, <a href= "mailto:timowalch@web.de" title="Outlook öffnen" >Timo Walcher</a>  | Daten: Landratsamt Tübingen');
  
   // Basemap 1
   var osm_basemap = L.tileLayer('https://{s}.tile.openstreetmap.de/tiles/osmde/{z}/{x}/{y}.png', {
@@ -503,8 +505,16 @@ tr:nth-child(even) {background-color: white;}
 	  position: "topright",
 	  initialZoomLevel: false,
 	  setView: false,
+	  circleStyle: {
+	  color: "red",
+	  fillColor: "red"},
+	  markerStyle: {
+		  color: "red",
+	  fillColor: "blue"},
 	  strings: {
-		title: "Standort"}
+		title: "Standort",
+		popup: "Sie sind hier"},
+		// erweiterbar mit {distance} für die Genauigkeit und {unit} für die Einheit
 	};
 	  
   // Layer control
