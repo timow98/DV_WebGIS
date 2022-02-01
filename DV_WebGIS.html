@@ -23,10 +23,10 @@
    
  <!-- Grouped Layers  -->
 	<script src="Plugins/leaflet.groupedlayercontrol.js"></script>
-	<script src="Plugins/leaflet.groupedlayercontrol.css"></script>
 	<link rel="stylesheet" href="Plugins/leaflet.groupedlayercontrol.css" />
 
   <!--Fuse Search-->
+  <script src="https://cdn.jsdelivr.net/npm/fuse.js@5.2.1"></script>
   <script src="Plugins/leaflet-fusesearch-master/src/leaflet.fusesearch.js"></script>
   <link rel="stylesheet" href="Plugins/leaflet-fusesearch-master/src/leaflet.fusesearch.css" />
 
@@ -520,19 +520,19 @@ tr:nth-child(even) {background-color: white;}
 		popup: "Sie sind hier"},
 		// erweiterbar mit {distance} für die Genauigkeit und {unit} für die Einheit
 	};
-
+/*
   // Search Bar
   var searchCtrl = L.control.fuseSearch()
   searchCtrl.addTo(DV_WebGIS);
 
-  searchCtrl.indexFeatures(Adr.properties.feature, ['Betriebsna', 'Nachname', 'KontaktOrt']);
+  searchCtrl.indexFeatures(Adr);
 
-  L.geoJson(data, {
+  L.geoJson(Adr, {
     onEachFeature: function (feature, layer) {
         feature.layer = layer;
     }
   });
-
+*/
 
   // Layer control
   L.control.groupedLayers(basemaps,overlays,options).addTo(DV_WebGIS);

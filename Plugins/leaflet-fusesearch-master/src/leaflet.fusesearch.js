@@ -240,12 +240,12 @@ L.Control.FuseSearch = L.Control.extend({
             threshold : this.options.threshold
         };
         
-        this._fuseIndex = new Fuse(properties, options);
+        this.fuseIndex = new Fuse(properties, options);
     },
     
     searchFeatures: function(string) {
         
-        var result = this._fuseIndex.search(string);
+        var result = this.fuseIndex.search(string);
 
         // Empty result list
         var listItems = document.querySelectorAll(".result-item");
