@@ -25,7 +25,11 @@
 	<script src="Plugins/leaflet.groupedlayercontrol.js"></script>
 	<script src="Plugins/leaflet.groupedlayercontrol.css"></script>
 	<link rel="stylesheet" href="Plugins/leaflet.groupedlayercontrol.css" />
- 
+
+  <!--Fuse Search-->
+  <script src="Plugins/leaflet-fusesearch-master/src/leaflet.fusesearch.js"></script>
+  <link rel="stylesheet" href="Plugins/leaflet-fusesearch-master/src/leaflet.fusesearch.css" />
+
  <!-- Geolocation -->
 	<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/leaflet.locatecontrol/dist/L.Control.Locate.min.css" />
 	<script src="https://cdn.jsdelivr.net/npm/leaflet.locatecontrol/dist/L.Control.Locate.min.js" charset="utf-8"></script>
@@ -43,11 +47,11 @@
 	 margin: 0;
   }
 	 
-//Hier wird die Tabelle bearbeitet 
-table {
-  border-collapse: collapse;
-  width: 100%;
-}
+ /*<!--  Hier wird die Tabelle bearbeitet -->*/
+ table {
+   border-collapse: collapse;
+   width: 100%;
+ }
 
 th, td {
   text-align: left;
@@ -141,7 +145,7 @@ tr:nth-child(even) {background-color: white;}
   if (feature.properties.Verkauf.includes("Lieferservice")) return true
   }
   function Rest (feature){
-	  //hier sind alle anderen Kategorien drin, für die es keinen extra Filter gibt.
+	//hier sind alle anderen Kategorien drin, für die es keinen extra Filter gibt.
 	  if (feature.properties.Verkauf.includes("Postversand"))return true
 	  if (feature.properties.Verkauf.includes("Onlineshop"))return true
 	  if (feature.properties.Verkauf.includes("Verkaufsstand"))return true
@@ -516,7 +520,20 @@ tr:nth-child(even) {background-color: white;}
 		popup: "Sie sind hier"},
 		// erweiterbar mit {distance} für die Genauigkeit und {unit} für die Einheit
 	};
-	  
+
+  // Search Bar
+  var searchCtrl = L.control.fuseSearch()
+  searchCtrl.addTo(DV_WebGIS);
+
+  searchCtrl.indexFeatures(Adr.properties.feature, ['Betriebsna', 'Nachname', 'KontaktOrt']);
+
+  L.geoJson(data, {
+    onEachFeature: function (feature, layer) {
+        feature.layer = layer;
+    }
+  });
+
+
   // Layer control
   L.control.groupedLayers(basemaps,overlays,options).addTo(DV_WebGIS);
   
