@@ -1,4 +1,4 @@
-var Adr  = {
+var Adr = {
 "type": "FeatureCollection",
 "name": "Adressen",
 "crs": { "type": "name", "properties": { "name": "urn:ogc:def:crs:OGC:1.3:CRS84" } },
