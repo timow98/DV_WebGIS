@@ -65,6 +65,7 @@ tr:nth-child(even) {background-color: white;}
 .leaflet-control-layers-expanded{
   max-height: 430px;
   overflow-y: scroll;
+  border-radius: 0px;
 }
 
  </style>	
@@ -507,8 +508,7 @@ tr:nth-child(even) {background-color: white;}
   var locateOptions = {
 	  enableHighAccuracy: true,
 	  position: "topright",
-	  initialZoomLevel: false,
-	  setView: false,
+	  initialZoomLevel: 18,
 	  circleStyle: {
 	  color: "red",
 	  fillColor: "red"},
