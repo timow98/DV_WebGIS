@@ -109,11 +109,7 @@ tr:nth-child(even) {background-color: white;}
   // Add popup function
   function popUpFunction(feature, layer) {
   var popupContent = 
-<<<<<<< HEAD
-              `${feature.properties.Logos === null ? '' : '<img src="/logos/'+feature.properties.Logos+'" alt="Firmenlogo">'}
-=======
-              `${feature.properties.logo === null ? '' : '<img src="/images/logos/'+feature.properties.Logos+'" alt="Firmenlogo" class="clogo">'}
->>>>>>> 637c6303ddc2a18d18a463969ae9ad34faee3084
+			  `${feature.properties.logo === null ? '' : '<img src="/images/logos/'+feature.properties.Logos+'" alt="Firmenlogo" class="clogo">'}
               <h3>${feature.properties.Betriebsna}</h3>
              
               <table>
