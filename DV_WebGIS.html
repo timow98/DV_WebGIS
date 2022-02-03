@@ -1,0 +1,562 @@
+<!DOCTYPE html>
+<!-- Sprache festlegen -->
+<html lang="en">
+<head>
+ <!-- set the charset -->
+ <meta charset="utf-8">
+ <!-- set make the map responsive -->
+ <meta http-equiv="X-UA-Compatible" content="IE=edge">
+ <meta name="viewport" content="initial-scale=1,user-scalable=no,maximum-scale=1,width=device-width">
+ <meta name="mobile-web-app-capable" content="yes">
+ <meta name="apple-mobile-web-app-capable" content="yes">
+ 
+ <!-- set the title shown in the browser tab -->
+	<title>WebGIS Direktvermarktung</title>
+	
+ <!-- Links to the leaflet CSS and JS -->
+ <link rel="stylesheet" href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css"
+   integrity="sha512-xodZBNTC5n17Xt2atTPuE1HxjVMSvLVW9ocqUKLsCC5CXdbqCmblAshOMAS6/keqq/sMZMZ19scR4PsZChSR7A=="
+   crossorigin=""/>
+ <script src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js"
+   integrity="sha512-XQoYMqMTK8LvdxXYG3nZ448hOEQiglfqkJs1NOQV44cWnUrBc8PkAOcXy20w0vlaXaVUearIOBhiXZ5V3ynxwA=="
+   crossorigin=""></script>
+   
+ <!-- Grouped Layers  -->
+	<script src="Plugins/leaflet.groupedlayercontrol.js"></script>
+	<link rel="stylesheet" href="Plugins/leaflet.groupedlayercontrol.css" />
+
+  <!--Fuse Search
+  <script src="https://cdn.jsdelivr.net/npm/fuse.js@5.2.1"></script>
+  <script src="Plugins/leaflet-fusesearch-master/src/leaflet.fusesearch.js"></script>
+  <link rel="stylesheet" href="Plugins/leaflet-fusesearch-master/src/leaflet.fusesearch.css" />-->
+
+ <!-- Geolocation -->
+	<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/leaflet.locatecontrol/dist/L.Control.Locate.min.css" />
+	<script src="https://cdn.jsdelivr.net/npm/leaflet.locatecontrol/dist/L.Control.Locate.min.js" charset="utf-8"></script>
+ 
+ <!-- Load adresses -->
+	<script src="Adressen.js"></script>
+	<script src="Lk_Tü.js"></script>
+ 
+ <!-- styles for elements html and body: fullscreen  -->
+ <style>
+  html, body {
+ 	 width: 100%;
+     height: 100%;
+	 padding: 0;
+	 margin: 0;
+  }
+  h3{
+    margin-top: 0px;
+  }
+	 
+ /*<!--  Hier wird die Tabelle bearbeitet -->*/
+ table {
+   border-collapse: collapse;
+   width: 100%;
+ }
+
+th, td {
+  text-align: left;
+  padding: 4px;
+  height: fit-content;
+  vertical-align:top;
+}
+
+tr:nth-child(even) {background-color: white;}
+
+.leaflet-control-layers-expanded{
+  max-height: 430px;
+  overflow-y: scroll;
+  border-radius: 0px;
+}
+.clogo{
+  width: 150px;
+  height: auto;
+}
+
+ </style>	
+</head>
+<body>
+
+ <!-- set the div element containing the map -->
+ <div id="mapid" style="width: 100%; height: 100%; padding: 0; margin: 0;"></div>
+ 
+ <script>
+  
+  // Leaflet Map erstellen + attributions (Impressum)
+  var DV_WebGIS  = L.map('mapid').setView([48.49300000000000, 8.998832702636719], 11);
+  DV_WebGIS.attributionControl.addAttribution('GEO-51 Integratives Projekt | '+
+  '<a href="https://uni-tuebingen.de/fakultaeten/mathematisch-naturwissenschaftliche-fakultaet/fachbereiche/geowissenschaften/arbeitsgruppen/geographie/forschungsbereich/geoinformatik-gis/arbeitsgruppe/aktuelles/">Geographisches Institut Tübingen</a>'+ 
+  '| Marie-Louise Dress, Lisa Holderied, Ben Schneider, <a href= "mailto:timowalch@web.de" title="Outlook öffnen" >Timo Walcher</a>  | Daten: Landratsamt Tübingen');
+ 
+  // Basemap 1
+  var osm_basemap = L.tileLayer('https://{s}.tile.openstreetmap.de/tiles/osmde/{z}/{x}/{y}.png', {
+	  attribution: '<a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>'
+  }).addTo(DV_WebGIS);
+ 
+  // Basemap 2
+  var otm_basemap = L.tileLayer('https://{s}.tile.opentopomap.org/{z}/{x}/{y}.png', {
+  attribution: '<a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>, <a href="http://viewfinderpanoramas.org">SRTM</a> | Map style: &copy; <a href="https://opentopomap.org">OpenTopoMap</a> (<a href="https://creativecommons.org/licenses/by-sa/3.0/">CC-BY-SA</a>)'
+  });
+ 
+  // Basemap dictionary
+  var basemaps = {
+   "Open Street Map DE": osm_basemap,
+   "Open Topo Map": otm_basemap
+  };
+  
+  // Add popup function
+  function popUpFunction(feature, layer) {
+  var popupContent = 
+<<<<<<< HEAD
+              `${feature.properties.Logos === null ? '' : '<img src="/logos/'+feature.properties.Logos+'" alt="Firmenlogo">'}
+=======
+              `${feature.properties.logo === null ? '' : '<img src="/images/logos/'+feature.properties.Logos+'" alt="Firmenlogo" class="clogo">'}
+>>>>>>> 637c6303ddc2a18d18a463969ae9ad34faee3084
+              <h3>${feature.properties.Betriebsna}</h3>
+             
+              <table>
+                <tr><td>Verkaufsart:</td> <td>${feature.properties.Verkauf} </td></tr>
+                ${feature.properties.Wochenmark === null ? '' : '<tr><td> Wochenmarkt:</td> <td>'+feature.properties.Wochenmark+'</td></tr>'} 
+                <tr><td>Produkte:</td> <td>${feature.properties.Lebensmitt} </td></tr>
+                <tr>${feature.properties.Anbau === null ? '' : '<td> Anbau:</td>  <td>'+feature.properties.Anbau+'</td></tr>'}
+                ${feature.properties.Öffnungsz === null ? '' : '<tr><td>Öffnungszeiten:</td> <td>'+feature.properties.Öffnungsz+'</td></tr>'}
+                <tr><td>Kontakt:</td><td>${feature.properties.Vorname} ${feature.properties.Nachname}<br>
+                                  ${feature.properties.KontaktStr}<br>
+                                  ${feature.properties.KontaktPLZ} ${feature.properties.KontaktOrt} ${feature.properties.KontaktTei === null ? '' : feature.properties.KontaktTei}<br>
+                                  ${feature.properties.EMail === null ? '' : feature.properties.EMail} <br>
+                                  ${feature.properties.Telefon === null ? '' : feature.properties.Telefon}<br>
+                                  ${feature.properties.Homepage === null ? '' : '<a href=https://'+feature.properties.Homepage+' target="_blank">'+feature.properties.Homepage+'</a></td></p>'} 
+                                  </tr>
+              </table>`;
+   layer.bindPopup(popupContent);
+  }
+  
+  
+  // Filterfunktionen Verkaufsart
+  function abHof(feature){
+  if (feature.properties.Verkauf.includes("ab Hof")) return true
+  }
+  function Hofladen(feature){
+  if (feature.properties.Verkauf.includes("Hofladen")) return true
+  }
+  function AutOSelbst(feature){
+  if (feature.properties.Verkauf.includes("Automat oder Selbstbedienung")) return true
+  }
+  function abHaustüre(feature){
+  if (feature.properties.Verkauf.includes("ab Haustür")) return true
+  }
+  function Brennerei(feature){
+  if (feature.properties.Verkauf.includes("Brennerei")) return true
+  }
+  function Gärtnerei(feature){
+  if (feature.properties.Verkauf.includes("Gärtnerei")) return true
+  }
+  function Liefer(feature){
+  if (feature.properties.Verkauf.includes("Lieferservice")) return true
+  }
+  function Rest (feature){
+	//hier sind alle anderen Kategorien drin, für die es keinen extra Filter gibt.
+	  if (feature.properties.Verkauf.includes("Postversand"))return true
+	  if (feature.properties.Verkauf.includes("Onlineshop"))return true
+	  if (feature.properties.Verkauf.includes("Verkaufsstand"))return true
+	  if (feature.properties.Verkauf.includes("Anfrage"))return true
+	  if (feature.properties.Verkauf.includes("Gastronomie"))return true
+	  if (feature.properties.Verkauf.includes("Erdbeerfeld"))return true
+	  if (feature.properties.Verkauf.includes("Fachgeschäft"))return true
+  } 
+  
+  // Filterfunktionen Produkte
+  
+  function Obst(feature){
+  if (feature.properties.Lebensmitt.includes("Obst")) return true
+  }
+  function Gemüse(feature){
+  if (feature.properties.Lebensmitt.includes("Gemüse")) return true
+  }
+  function Linsen(feature){
+  if (feature.properties.Lebensmitt.includes("Linsen")) return true
+  }
+  function Kartoffeln(feature){
+  if (feature.properties.Lebensmitt.includes("Kartoffeln")) return true
+  }
+  function Eier(feature){
+  if (feature.properties.Lebensmitt.includes("Eier")) return true
+  }
+  function Milch(feature){
+  if (feature.properties.Lebensmitt.includes("Milch")) return true
+  }
+  function Honig(feature){
+  if (feature.properties.Lebensmitt.includes("Honig")) return true
+  }
+  function Marmelade(feature){
+  if (feature.properties.Lebensmitt.includes("Marmelade")) return true
+  }
+  function Öl(feature){
+  if (feature.properties.Lebensmitt.includes("Öl")) return true
+  }
+  function Brot(feature){
+  if (feature.properties.Lebensmitt.includes("Brot")) return true
+  }
+  function Nudeln(feature){
+  if (feature.properties.Lebensmitt.includes("Nudeln")) return true
+  }
+  function Mehl(feature){
+  if (feature.properties.Lebensmitt.includes("Mehl")) return true
+  }
+  function Schwein(feature){
+  if (feature.properties.Lebensmitt.includes("Schwein")) return true
+  }
+  function Geflügel(feature){
+  if (feature.properties.Lebensmitt.includes("Geflügel")) return true
+  }
+  function Rind(feature){
+  if (feature.properties.Lebensmitt.includes("Rind")) return true
+  }
+  function Lamm(feature){
+  if (feature.properties.Lebensmitt.includes("Lamm")) return true
+  }
+  function Wild(feature){
+  if (feature.properties.Lebensmitt.includes("Wild")) return true
+  }
+  function Forelle(feature){
+  if (feature.properties.Lebensmitt.includes("Forelle")) return true
+  }
+  function Saft(feature){
+  if (feature.properties.Lebensmitt.includes("Saft")) return true
+  }
+  function Most(feature){
+  if (feature.properties.Lebensmitt.includes("Most")) return true
+  }
+  function Wein(feature){
+  if (feature.properties.Lebensmitt.includes("Wein")) return true
+  }
+  function Secco(feature){
+  if (feature.properties.Lebensmitt.includes("Secco")) return true
+  }
+  function BräLi(feature){
+  if (feature.properties.Lebensmitt.includes("Brände/Liköre")) return true
+  }
+  function Whisky(feature){
+  if (feature.properties.Lebensmitt.includes("Whisky")) return true
+  }
+  function Met(feature){
+  if (feature.properties.Lebensmitt.includes("Met")) return true
+  }
+  function Blumen(feature){
+  if (feature.properties.Lebensmitt.includes("Blumen")) return true
+  }
+  function Kräuter(feature){
+  if (feature.properties.Lebensmitt.includes("Kräuter")) return true
+  }
+  function Setzlinge(feature){
+  if (feature.properties.Lebensmitt.includes("Setzlinge")) return true
+  }
+  function Nüsse(feature){
+  if (feature.properties.Lebensmitt.includes("Nüsse")) return true
+  }
+  function Wurst(feature){
+  if (feature.properties.Lebensmitt.includes("Wurst")) return true
+  }
+ 
+  // Points Verkaufsart
+  var AutOSelbst = L.geoJSON(Adr, {
+  filter: AutOSelbst,
+  onEachFeature: popUpFunction
+   });
+   
+  var Liefer = L.geoJSON(Adr, {
+  filter: Liefer,
+  onEachFeature: popUpFunction
+   });
+   
+  var Gärtnerei = L.geoJSON(Adr, {
+  filter: Gärtnerei,
+  onEachFeature: popUpFunction
+   });
+  
+  var Brennerei = L.geoJSON(Adr, {
+  filter: Brennerei,
+  onEachFeature: popUpFunction
+  });
+  
+  var abHaustüre = L.geoJSON(Adr, {
+  filter: abHaustüre,
+  onEachFeature: popUpFunction,
+   });
+  
+  var Hofladen = L.geoJSON(Adr, {
+  filter: Hofladen,
+  onEachFeature: popUpFunction,
+   });
+  
+  var abHof = L.geoJSON(Adr, {
+  filter: abHof,
+  onEachFeature: popUpFunction,
+   });
+
+  var overlay_adr = new L.geoJSON(Adr, {
+   onEachFeature: popUpFunction,
+   }).addTo(DV_WebGIS);
+   
+  var Sonstige = L.geoJSON(Adr, {
+  filter: Rest,
+  onEachFeature: popUpFunction,
+   }); 
+   
+  // Points Produkte
+    var Obst = L.geoJSON(Adr, {
+  filter: Obst,
+  onEachFeature: popUpFunction,
+   });
+   
+  var Gemüse = L.geoJSON(Adr, {
+  filter: Gemüse,
+  onEachFeature: popUpFunction,
+   });
+   
+  var Linsen = L.geoJSON(Adr, {
+  filter: Linsen,
+  onEachFeature: popUpFunction,
+   });
+  
+  var Kartoffeln = L.geoJSON(Adr, {
+  filter: Kartoffeln,
+  onEachFeature: popUpFunction,
+  });
+  
+  var Eier = L.geoJSON(Adr, {
+  filter: Eier,
+  onEachFeature: popUpFunction,
+   });
+  
+  var Milch = L.geoJSON(Adr, {
+  filter: Milch,
+  onEachFeature: popUpFunction,
+   });
+  
+  var Honig = L.geoJSON(Adr, {
+  filter: Honig,
+  onEachFeature: popUpFunction,
+   });
+
+  var Marmelade = L.geoJSON(Adr, {
+  filter: Marmelade,
+  onEachFeature: popUpFunction,
+   });
+
+  var Öl = L.geoJSON(Adr, {
+  filter: Öl,
+  onEachFeature: popUpFunction,
+   });
+
+  var Brot = L.geoJSON(Adr, {
+  filter: Brot,
+  onEachFeature: popUpFunction,
+   });
+
+  var Nudeln = L.geoJSON(Adr, {
+  filter: Nudeln,
+  onEachFeature: popUpFunction,
+   });
+
+  var Mehl = L.geoJSON(Adr, {
+  filter: Mehl,
+  onEachFeature: popUpFunction,
+   });
+
+  var Schwein = L.geoJSON(Adr, {
+  filter: Schwein,
+  onEachFeature: popUpFunction,
+   });
+
+  var Geflügel = L.geoJSON(Adr, {
+  filter: Geflügel,
+  onEachFeature: popUpFunction,
+   });
+
+  var Rind = L.geoJSON(Adr, {
+  filter: Rind,
+  onEachFeature: popUpFunction,
+   });
+
+  var Lamm = L.geoJSON(Adr, {
+  filter: Lamm,
+  onEachFeature: popUpFunction,
+   });
+
+  var Wild = L.geoJSON(Adr, {
+  filter: Wild,
+  onEachFeature: popUpFunction,
+   });
+
+  var Forelle = L.geoJSON(Adr, {
+  filter: Forelle,
+  onEachFeature: popUpFunction,
+   });
+
+  var Saft = L.geoJSON(Adr, {
+  filter: Saft,
+  onEachFeature: popUpFunction,
+   });
+
+  var Most = L.geoJSON(Adr, {
+  filter: Most,
+  onEachFeature: popUpFunction,
+   });
+
+  var Wein = L.geoJSON(Adr, {
+  filter: Wein,
+  onEachFeature: popUpFunction,
+   });
+
+  var Secco = L.geoJSON(Adr, {
+  filter: Secco,
+  onEachFeature: popUpFunction,
+   });
+
+  var BräLi = L.geoJSON(Adr, {
+  filter: BräLi,
+  onEachFeature: popUpFunction,
+   });
+
+  var Whisky = L.geoJSON(Adr, {
+  filter: Whisky,
+  onEachFeature: popUpFunction,
+   });
+
+  var Met = L.geoJSON(Adr, {
+  filter: Met,
+  onEachFeature: popUpFunction,
+   });
+
+   var Blumen = L.geoJSON(Adr, {
+  filter: Blumen,
+  onEachFeature: popUpFunction,
+   });
+
+   var Kräuter = L.geoJSON(Adr, {
+  filter: Kräuter,
+  onEachFeature: popUpFunction,
+   });
+
+   var Setzlinge = L.geoJSON(Adr, {
+  filter: Setzlinge,
+  onEachFeature: popUpFunction,
+   });
+
+   var Nüsse = L.geoJSON(Adr, {
+  filter: Nüsse,
+  onEachFeature: popUpFunction,
+   });
+
+   var Wurst = L.geoJSON(Adr, {
+  filter: Wurst,
+  onEachFeature: popUpFunction,
+   })
+   
+  // Landkreis Polyline
+  var polyline = new L.geoJSON(Lines, {color: 'grey'}).addTo(DV_WebGIS);
+   
+
+  // Overlay dictionary
+  var overlays = {
+  "<b><font size='2' style='color:rgb(50,80,200);'>  Verkaufsart</font></b> ":{
+  "Alle Direktvermarkter": overlay_adr,
+  "Automat/Selbstbed.": AutOSelbst,
+  "ab Haustüre": abHaustüre,
+  "ab Hof": abHof,
+  "Brennerei": Brennerei,
+  "Gärtnerei": Gärtnerei,
+  "Hofladen": Hofladen,
+  "Lieferservice": Liefer,
+  "Sonstige": Sonstige
+   },
+  "<b><font size='2' style='color:rgb(50,80,200);'>  Produkte</font></b> ":{
+  "Obst": Obst, 
+  "Gemüse": Gemüse,
+  "Linsen": Linsen,
+  "Kartoffeln": Kartoffeln, 
+  "Eier": Eier,
+  "Milch": Milch, 
+  "Honig": Honig,
+  "Marmelade": Marmelade,
+  "Öl": Öl,
+  "Brot": Brot,
+  "Nudeln": Nudeln,
+  "Mehl": Mehl,
+  "Schwein": Schwein,
+  "Geflügel": Geflügel,
+  "Rind": Rind, 
+  "Lamm": Lamm, 
+  "Wild": Wild,
+  "Forelle": Forelle,
+  "Saft": Saft,
+  "Most": Most,
+  "Wein": Wein,
+  "Secco": Secco,
+  "Brände/Liköre": BräLi,
+  "Whisky": Whisky,
+  "Met": Met,
+  "Blumen": Blumen,
+  "Kräuter": Kräuter,
+  "Setzlinge": Setzlinge,
+  "Nüsse": Nüsse,
+  "Wurst": Wurst
+  }};
+
+  var options = {
+      //exclusiveGroups: ["Besenwirtschaften", "Direktvermarkter"],
+      groupCheckboxes: false,
+	  groupsCollapsable: true,
+	  collapsed: false,
+	  groupsExpandedClass: "chevron bottom", 
+	  groupsCollapsedClass: "chevron right",
+	  position: "topleft"
+	  };
+	
+  var locateOptions = {
+	  enableHighAccuracy: true,
+	  position: "topright",
+	  initialZoomLevel: 18,
+	  circleStyle: {
+	  color: "red",
+	  fillColor: "red"},
+	  markerStyle: {
+		  color: "red",
+	  fillColor: "blue"},
+	  strings: {
+		title: "Standort",
+		popup: "Sie sind hier"},
+		// erweiterbar mit {distance} für die Genauigkeit und {unit} für die Einheit
+	};
+/*
+  // Search Bar
+  var searchCtrl = L.control.fuseSearch()
+  searchCtrl.addTo(DV_WebGIS);
+
+  searchCtrl.indexFeatures(Adr);
+
+  L.geoJson(Adr, {
+    onEachFeature: function (feature, layer) {
+        feature.layer = layer;
+    }
+  });
+*/
+
+  // Layer control
+  L.control.groupedLayers(basemaps,overlays,options).addTo(DV_WebGIS);
+  
+  // Location Control
+  L.control.locate(locateOptions).addTo(DV_WebGIS);
+
+  // Scale control
+  var scale = L.control.scale({maxWidth: 150, metric: true, imperial: true}).addTo(DV_WebGIS);
+ 
+
+
+ </script>
+ 
+</body>
+</html>
