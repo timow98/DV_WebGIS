@@ -28,7 +28,7 @@
   <!--Fuse Search
   <script src="https://cdn.jsdelivr.net/npm/fuse.js@5.2.1"></script>
   <script src="Plugins/leaflet-fusesearch-master/src/leaflet.fusesearch.js"></script>
-  <link rel="stylesheet" href="Plugins/leaflet-fusesearch-master/src/leaflet.fusesearch.css" />-->
+  <link rel="stylesheet" href="Plugins/leaflet-fusesearch-master/src/leaflet.fusesearch.css" /> -->
 
  <!-- Geolocation -->
 	<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/leaflet.locatecontrol/dist/L.Control.Locate.min.css" />
@@ -109,7 +109,7 @@ tr:nth-child(even) {background-color: white;}
   // Add popup function
   function popUpFunction(feature, layer) {
   var popupContent = 
-              `${feature.properties.logo === null ? '' : '<img src="/images/logos/'+feature.properties.Logos+'" alt="Firmenlogo" class="clogo">'}
+			  `${feature.properties.Logos === null ? '' : '<img src="/images/logos/'+feature.properties.Logos+'" alt="Firmenlogo" class="clogo">'}
               <h3>${feature.properties.Betriebsna}</h3>
              
               <table>
