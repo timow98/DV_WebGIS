@@ -70,8 +70,9 @@ tr:nth-child(even) {background-color: white;}
   overflow-y: scroll;
   border-radius: 0px;
 }
+/*<!-- Hier werden die Firmenlogos bearbeitet -->*/
 .clogo{
-  width: 150px;
+  width: 180px;
   height: auto;
 }
 
@@ -109,7 +110,7 @@ tr:nth-child(even) {background-color: white;}
   // Add popup function
   function popUpFunction(feature, layer) {
   var popupContent = 
-			  `${feature.properties.Logos === null ? '' : '<img src="/images/logos/'+feature.properties.Logos+'" alt="Firmenlogo" class="clogo">'}
+			  `${feature.properties.Logos === null ? '' : '<img src="/images/logos/'+feature.properties.Logos+'" alt="" class="clogo">'}
               <h3>${feature.properties.Betriebsna}</h3>
              
               <table>
@@ -124,6 +125,7 @@ tr:nth-child(even) {background-color: white;}
                                   ${feature.properties.EMail === null ? '' : feature.properties.EMail} <br>
                                   ${feature.properties.Telefon === null ? '' : feature.properties.Telefon}<br>
                                   ${feature.properties.Homepage === null ? '' : '<a href=https://'+feature.properties.Homepage+' target="_blank">'+feature.properties.Homepage+'</a></td></p>'} 
+                                  ${feature.properties.Anmerkunge === null ? '' : '<tr><td> Anmerkungen:</td> <td>'+feature.properties.Anmerkunge+'</td></tr>'}
                                   </tr>
               </table>`;
    layer.bindPopup(popupContent);
